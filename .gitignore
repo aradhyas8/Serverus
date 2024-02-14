@@ -1,2 +1,5 @@
 deployment/node_modules
 deployment/dist
+
+req-handler/node_modules
+req-handler/dist
