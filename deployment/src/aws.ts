@@ -43,3 +43,37 @@ export async function downloadS3Folder(prefix: string) {
   console.log("awaiting");
   await Promise.all(allPromises?.filter(x => x !== undefined));
 }
+
+
+export function copyFinalDist(id: string){
+  const folderPath = path.join(__dirname, `output/${id}/dist`);
+  const allFiles = getAllFiles(folderPath);
+  allFiles.forEach(file=> {
+    uploadFile(`dist/${id}/` + file.slice(folderPath.length + 1), file);
+  })
+  
+ }
+
+ const getAllFiles = (folderPath: string) => {
+  let response: string[] = [];
+
+  const allFilesAndFolders = fs.readdirSync(folderPath);allFilesAndFolders.forEach(file =>{
+    const fullPath = path.join(folderPath, file);
+    if(fs.lstatSync(fullPath).isDirectory()){
+      response = response.concat(getAllFiles(fullPath));
+    } else {
+      response.push(fullPath);
+    }
+  })
+  return response;
+ }
+
+ const uploadFile = async (fileName: string, localFilePath: string) => {
+    const fileContent = fs.readFileSync(localFilePath);
+    const response = await s3.upload({
+      Body: fileContent,
+      Bucket: "serverus",
+      Key: fileName,
+    }). promise();
+    console.log(response);
+ }
