@@ -6,13 +6,13 @@ const subscriber = createClient();
 subscriber.connect().then(() => {main();});
 
 const publisher = createClient();
-subscriber.connect();
+publisher.connect();
 
 async function main() {
     while(1) {
         const res = await subscriber.brPop('build-queue',0);
 
-        ///@ts-ignore;
+        //@ts-ignore;
         const id = res.element
 
 
