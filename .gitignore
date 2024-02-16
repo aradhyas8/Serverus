@@ -3,3 +3,5 @@ deployment/dist
 
 req-handler/node_modules
 req-handler/dist
+
+fe/node_modules
