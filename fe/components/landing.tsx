@@ -18,6 +18,7 @@ export function Landing() {
 
     return (
         <main className="flex flex-col items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900 p-4">
+            <h1 className="flex text-5xl bg-gray-50  items-center justify-center p-10">-SERVERUS-</h1>
             <Card className="w-full max-w-md">
                 <CardHeader>
                     <CardTitle className="text-xl">Deploy your GitHub Repository</CardTitle>
