@@ -34,7 +34,7 @@ app.post("/deploy", async (req, res) => {
     
     files.forEach(async file => {
       //C:\Users\aradhya\Desktop\Ethan Personal Projects\NexaDeploy\dist\output\zrc3e
-      let abcd = 5;
+      
       let normalizedFile = file.replace(/\\/g, "/");
       await uploadFile(normalizedFile.slice(__dirname.length + 1), file);
     })
