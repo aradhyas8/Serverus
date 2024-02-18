@@ -18,7 +18,5 @@ RUN npm install typescript
 RUN npx tsc -b
 WORKDIR ./dist
 
-RUN node index.js
-
 EXPOSE 3000
-CMD [ "npm", "start" ]
+CMD [ "node", "index.js" ]

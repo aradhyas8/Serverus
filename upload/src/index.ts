@@ -12,10 +12,26 @@ import { getAllFiles } from "./file";
 import { uploadFile } from "./aws";
 import { createClient } from "redis";
 
-const publisher = createClient();
+// Using environment variables with default values
+const redisHost = process.env.REDIS_HOST || "localhost"; // Use 'redis' if running with Docker Compose and it's the service name
+const redisPort = process.env.REDIS_PORT
+  ? parseInt(process.env.REDIS_PORT)
+  : 6379;
+
+const publisher = createClient({
+  socket: {
+    host: redisHost,
+    port: redisPort,
+  },
+});
 publisher.connect();
 
-const subscriber = createClient();
+const subscriber = createClient({
+  socket: {
+    host: redisHost,
+    port: redisPort,
+  },
+});
 subscriber.connect();
 
 
