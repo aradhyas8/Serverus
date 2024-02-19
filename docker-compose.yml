@@ -5,3 +5,31 @@ services:
     image: redis:latest
     ports:
       - "6379:6379"
+
+  upload:
+    build: ./upload
+    ports: 
+      - "3000:3000"
+    environment:
+      - REDIS_HOST=redis 
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  deployment:
+    build: ./deployment
+    environment:
+      - REDIS_HOST=redis 
+    depends_on:
+      - redis
+    restart: unless-stopped
+  
+  req-handler:
+    build: ./req-handler
+    ports: 
+      - "3001:3001"
+    environment:
+      - REDIS_HOST=redis 
+    depends_on:
+      - redis
+    restart: unless-stopped
