@@ -10,9 +10,6 @@ RUN npm install
 COPY . .
 
 ENV NODE_OPTIONS=--max-old-space-size=8192
-RUN npm install typescript && \
-    npx tsc -b
-
 
 EXPOSE 3000
 
