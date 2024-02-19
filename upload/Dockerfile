@@ -6,7 +6,9 @@ WORKDIR /app
 COPY package*.json ./
 
 RUN npm install
-RUN apt-get install -y git
+RUN apt-get install -y git && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 COPY . .
 
