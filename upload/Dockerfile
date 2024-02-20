@@ -1,4 +1,3 @@
-
 FROM node:18
 
 WORKDIR /app
@@ -6,13 +5,11 @@ WORKDIR /app
 COPY package*.json ./
 
 RUN npm install
-RUN apt-get install -y git && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
+RUN npm install typescript --save-dev
 COPY . .
+COPY dist ./dist
 
-ENV NODE_OPTIONS=--max-old-space-size=8192
+RUN npx tsc -b
 
 EXPOSE 3000
 
