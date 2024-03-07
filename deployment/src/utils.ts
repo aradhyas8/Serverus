@@ -4,30 +4,28 @@ import fs from "fs";
 
 export function buildProject(id: string) {
   return new Promise((resolve, reject) => {
-    // Adjust the output path to point to the correct directory under the 'upload' folder
-    const outputPath = path.join(__dirname, `../upload/${id}/dist`); // Assuming the build output is expected in a 'dist' subdirectory
+    // Correct the outputPath to match the correct structure
+    // Assuming the build output should indeed be checked in a 'dist' directory within the project folder
+    const outputPath = path.join(__dirname, `../../upload/output/${id}/dist`);
+
     const checkIfBuilt = () => fs.existsSync(outputPath);
 
     const executeBuild = () => {
-      // Make sure the command is executed in the correct directory within the 'upload' folder
-      const child = exec(
-        `cd ${path.join(
-          __dirname,
-          `../upload/${id}`
-        )} && npm install && npm run build`
-      );
+      // Update the directory path to match the correct location
+      const projectPath = path.join(__dirname, `../../upload/output/${id}`);
+      const child = exec(`cd ${projectPath} && npm install && npm run build`);
 
       child.stdout?.on("data", function (data) {
-        console.log("stdout:" + data);
+        console.log("stdout: " + data);
       });
       child.stderr?.on("data", function (data) {
-        console.log("stderr:" + data);
+        console.log("stderr: " + data);
       });
       child.on("close", function (code) {
         if (checkIfBuilt()) {
           resolve("Build successful");
         } else {
-          console.log("index.html not found. Building again...");
+          console.log("Build output not found. Building again...");
           executeBuild();
         }
       });

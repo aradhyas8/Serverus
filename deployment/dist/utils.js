@@ -9,25 +9,27 @@ const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 function buildProject(id) {
     return new Promise((resolve, reject) => {
-        // Adjust the output path to point to the correct directory under the 'upload' folder
-        const outputPath = path_1.default.join(__dirname, `../upload/${id}/dist`); // Assuming the build output is expected in a 'dist' subdirectory
+        // Correct the outputPath to match the correct structure
+        // Assuming the build output should indeed be checked in a 'dist' directory within the project folder
+        const outputPath = path_1.default.join(__dirname, `../../upload/output/${id}/dist`);
         const checkIfBuilt = () => fs_1.default.existsSync(outputPath);
         const executeBuild = () => {
             var _a, _b;
-            // Make sure the command is executed in the correct directory within the 'upload' folder
-            const child = (0, child_process_1.exec)(`cd ${path_1.default.join(__dirname, `../upload/${id}`)} && npm install && npm run build`);
+            // Update the directory path to match the correct location
+            const projectPath = path_1.default.join(__dirname, `../../upload/output/${id}`);
+            const child = (0, child_process_1.exec)(`cd ${projectPath} && npm install && npm run build`);
             (_a = child.stdout) === null || _a === void 0 ? void 0 : _a.on("data", function (data) {
-                console.log("stdout:" + data);
+                console.log("stdout: " + data);
             });
             (_b = child.stderr) === null || _b === void 0 ? void 0 : _b.on("data", function (data) {
-                console.log("stderr:" + data);
+                console.log("stderr: " + data);
             });
             child.on("close", function (code) {
                 if (checkIfBuilt()) {
                     resolve("Build successful");
                 }
                 else {
-                    console.log("index.html not found. Building again...");
+                    console.log("Build output not found. Building again...");
                     executeBuild();
                 }
             });
