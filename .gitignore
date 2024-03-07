@@ -1,5 +1,7 @@
 deployment/node_modules
 
+deployment/dist/output
+
 
 req-handler/node_modules
 
