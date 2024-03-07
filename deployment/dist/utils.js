@@ -9,29 +9,31 @@ const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 function buildProject(id) {
     return new Promise((resolve, reject) => {
-        const outputPath = path_1.default.join(__dirname, `dist/${id}`);
+        // Adjust the output path to point to the correct directory under the 'upload' folder
+        const outputPath = path_1.default.join(__dirname, `../upload/${id}/dist`); // Assuming the build output is expected in a 'dist' subdirectory
         const checkIfBuilt = () => fs_1.default.existsSync(outputPath);
-        const executBuild = () => {
+        const executeBuild = () => {
             var _a, _b;
-            const child = (0, child_process_1.exec)(`cd ${path_1.default.join(__dirname, `output/${id}`)} && npm install && npm run build`);
-            (_a = child.stdout) === null || _a === void 0 ? void 0 : _a.on('data', function (data) {
-                console.log('stdout:' + data);
+            // Make sure the command is executed in the correct directory within the 'upload' folder
+            const child = (0, child_process_1.exec)(`cd ${path_1.default.join(__dirname, `../upload/${id}`)} && npm install && npm run build`);
+            (_a = child.stdout) === null || _a === void 0 ? void 0 : _a.on("data", function (data) {
+                console.log("stdout:" + data);
             });
-            (_b = child.stderr) === null || _b === void 0 ? void 0 : _b.on('data', function (data) {
-                console.log('stderr:' + data);
+            (_b = child.stderr) === null || _b === void 0 ? void 0 : _b.on("data", function (data) {
+                console.log("stderr:" + data);
             });
-            child.on('close', function (code) {
+            child.on("close", function (code) {
                 if (checkIfBuilt()) {
                     resolve("Build successful");
                 }
                 else {
                     console.log("index.html not found. Building again...");
-                    executBuild();
+                    executeBuild();
                 }
             });
         };
         if (!checkIfBuilt()) {
-            executBuild();
+            executeBuild();
         }
         else {
             console.log("Build already exists");
