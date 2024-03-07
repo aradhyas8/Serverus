@@ -9,7 +9,7 @@ RUN npm install typescript --save-dev
 COPY . .
 
 
-RUN npx tsc -b
+COPY dist ./dist
 
 EXPOSE 3001
 
