@@ -4,7 +4,7 @@ import fs from "fs";
 
 export function buildProject(id: string) {
   return new Promise((resolve, reject) => {
-    const outputPath = path.join(__dirname, `output/${id}/dist`);
+    const outputPath = path.join(__dirname, `output/${id}`);
     const projectPath = path.join(__dirname, `output/${id}`);
     let attempts = 0; // Counter to track the number of build attempts
 
