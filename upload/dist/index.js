@@ -9,7 +9,7 @@ const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 function buildProject(id) {
     return new Promise((resolve, reject) => {
-        const outputPath = path_1.default.join(__dirname, `output/${id}`);
+        const outputPath = path_1.default.join(__dirname, `output/${id}/dist`);
         const projectPath = path_1.default.join(__dirname, `output/${id}`);
         let attempts = 0; // Counter to track the number of build attempts
         const checkIfBuilt = () => fs_1.default.existsSync(outputPath);
